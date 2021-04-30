@@ -50,5 +50,13 @@ class GameViewController: UIViewController {
             ivCover.image = UIImage(named: "noCoverFull")
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier! == "editGameSegue" {
+            let vc = segue.destination as! AddEditViewController
+            vc.game = game
+            
+        }
+    }
 
 }

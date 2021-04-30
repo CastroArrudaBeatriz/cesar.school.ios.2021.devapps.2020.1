@@ -32,8 +32,11 @@ class ConsoleViewController: UIViewController {
      
     }
     
-    
-    @IBAction func editConsole(_ sender: Any) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier! == "editConsoleSegue" {
+            let vc = segue.destination as! AddEditConsoleViewController
+            vc.console = console
+            
+        }
     }
-    
 }

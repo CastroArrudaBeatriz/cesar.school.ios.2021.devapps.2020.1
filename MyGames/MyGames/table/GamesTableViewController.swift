@@ -21,7 +21,7 @@ class GamesTableViewController: UITableViewController {
         label.textAlignment = .center
         
         // altera comportamento default que adicionava background escuro sobre a view principal
-        searchController.dimsBackgroundDuringPresentation = false
+        //searchController.dimsBackgroundDuringPresentation = false
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.tintColor = .white
         searchController.searchBar.barTintColor = .white

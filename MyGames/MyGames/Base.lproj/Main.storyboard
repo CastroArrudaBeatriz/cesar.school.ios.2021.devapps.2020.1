@@ -342,6 +342,7 @@
                     </view>
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="sEB-VY-wyh"/>
                     <connections>
+                        <outlet property="btAddEdit" destination="1Jd-H8-ls5" id="wFK-GS-XFe"/>
                         <outlet property="btAddImagem" destination="Bj6-GB-NzN" id="MqY-E0-AVd"/>
                         <outlet property="ivCover" destination="xgy-VM-1fp" id="BAl-fp-zn4"/>
                         <outlet property="tfName" destination="F6Z-PM-Jfi" id="KJe-9R-FWh"/>
@@ -384,8 +385,7 @@
                     <navigationItem key="navigationItem" id="DRj-AB-Fwe">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="LgE-qx-17D">
                             <connections>
-                                <action selector="editConsole:" destination="hus-oN-WCO" id="Lbg-Gg-L3N"/>
-                                <segue destination="G9e-Dc-8h4" kind="show" id="ZpS-cQ-gpV"/>
+                                <segue destination="G9e-Dc-8h4" kind="show" identifier="editConsoleSegue" id="ZpS-cQ-gpV"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -459,7 +459,7 @@
                     <navigationItem key="navigationItem" title="Visualizar" largeTitleDisplayMode="always" id="rjA-NE-0bR">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="dOV-J7-P9h">
                             <connections>
-                                <segue destination="3L9-bj-8cU" kind="show" id="aRT-F4-bMQ"/>
+                                <segue destination="3L9-bj-8cU" kind="show" identifier="editGameSegue" id="aRT-F4-bMQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -524,7 +524,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="ZpS-cQ-gpV"/>
-        <segue reference="5Co-Ng-6pL"/>
+        <segue reference="aRT-F4-bMQ"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="console" width="23" height="23"/>

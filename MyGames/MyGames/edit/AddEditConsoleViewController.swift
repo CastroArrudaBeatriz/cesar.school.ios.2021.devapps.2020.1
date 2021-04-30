@@ -17,13 +17,26 @@ class AddEditConsoleViewController: UIViewController {
     @IBOutlet weak var ivCover: UIImageView!
     
     @IBOutlet weak var btAddImagem: UIButton!
+    @IBOutlet weak var btAddEdit: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        prepareDataLayout()
     }
     
+    func prepareDataLayout() {
+        if console != nil {
+            title = "Editar console"
+            btAddEdit.setTitle("ALTERAR", for: .normal)
+            tfName.text = console.name
+          
+            ivCover.image = console.cover as? UIImage
+        }
+        
+        if console.cover != nil {
+            btAddImagem.setTitle(nil, for: .normal)
+        }
+    }
     
     @IBAction func addImageConsole(_ sender: Any) {
         let alert = UIAlertController(title: "Selecinar console", message: "De onde você quer escolher a capa?", preferredStyle: .actionSheet)
