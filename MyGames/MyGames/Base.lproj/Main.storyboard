@@ -227,22 +227,41 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <color key="separatorColor" name="second"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="Ggk-Ac-jBt" style="IBUITableViewCellStyleDefault" id="fCM-75-mho">
-                                <rect key="frame" x="0.0" y="55.5" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="100" id="fCM-75-mho" customClass="ConsoleTableViewCell" customModule="MyGames" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="414" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="fCM-75-mho" id="hZf-Yd-KqV">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ggk-Ac-jBt">
-                                            <rect key="frame" x="20" y="0.0" width="374" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vMH-jB-xG5">
+                                            <rect key="frame" x="20" y="19" width="48" height="62"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="62" id="AK4-vh-aJi"/>
+                                                <constraint firstAttribute="width" constant="48" id="WQ1-Ke-MhQ"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Console" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALY-QK-iDv">
+                                            <rect key="frame" x="84" y="40" width="318" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ALY-QK-iDv" firstAttribute="leading" secondItem="vMH-jB-xG5" secondAttribute="trailing" constant="16" id="3Xx-jU-xuW"/>
+                                        <constraint firstItem="ALY-QK-iDv" firstAttribute="centerY" secondItem="vMH-jB-xG5" secondAttribute="centerY" id="D3l-H7-Hwu"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="vMH-jB-xG5" secondAttribute="bottom" constant="8" id="Snu-mC-L4m"/>
+                                        <constraint firstItem="vMH-jB-xG5" firstAttribute="leading" secondItem="hZf-Yd-KqV" secondAttribute="leadingMargin" id="ab7-ux-15s"/>
+                                        <constraint firstItem="ALY-QK-iDv" firstAttribute="trailing" secondItem="hZf-Yd-KqV" secondAttribute="trailingMargin" constant="8" id="c0X-6O-ef1"/>
+                                        <constraint firstItem="vMH-jB-xG5" firstAttribute="top" secondItem="hZf-Yd-KqV" secondAttribute="topMargin" constant="8" id="lKd-rW-ftJ"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="ivConsole" destination="vMH-jB-xG5" id="jrU-5W-MhF"/>
+                                    <outlet property="lbConsole" destination="ALY-QK-iDv" id="sF4-rG-f4d"/>
+                                    <segue destination="hus-oN-WCO" kind="show" identifier="consoleSegue" id="eIH-O0-rIW"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -253,8 +272,7 @@
                     <navigationItem key="navigationItem" title="Plataformas" id="XAV-gp-SuW">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="E06-X9-Nuh">
                             <connections>
-                                <action selector="addConsole:" destination="Cga-Qi-dNa" id="xYZ-Ea-zAs"/>
-                                <segue destination="G9e-Dc-8h4" kind="show" id="ZJE-o1-zOQ"/>
+                                <segue destination="G9e-Dc-8h4" kind="show" identifier="newConsoleSegue" id="ZJE-o1-zOQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -331,7 +349,54 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4uQ-lA-ses" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3940.579710144928" y="1320.5357142857142"/>
+            <point key="canvasLocation" x="4839" y="1149"/>
+        </scene>
+        <!--Console View Controller-->
+        <scene sceneID="F2p-WU-qWK">
+            <objects>
+                <viewController id="hus-oN-WCO" customClass="ConsoleViewController" customModule="MyGames" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8CZ-iC-oVH">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nome Console" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="THR-8p-cLZ">
+                                <rect key="frame" x="18" y="158" width="378" height="27.5"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="23"/>
+                                <color key="textColor" name="second"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="roS-bG-amX">
+                                <rect key="frame" x="18" y="215.5" width="378" height="547.5"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="NkG-rV-rtM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="NkG-rV-rtM" firstAttribute="trailing" secondItem="THR-8p-cLZ" secondAttribute="trailing" constant="18" id="5xg-M7-Hkm"/>
+                            <constraint firstItem="THR-8p-cLZ" firstAttribute="leading" secondItem="NkG-rV-rtM" secondAttribute="leading" constant="18" id="9EH-3X-gdZ"/>
+                            <constraint firstItem="roS-bG-amX" firstAttribute="leading" secondItem="NkG-rV-rtM" secondAttribute="leading" constant="18" id="FwF-Z1-VAE"/>
+                            <constraint firstItem="NkG-rV-rtM" firstAttribute="trailing" secondItem="roS-bG-amX" secondAttribute="trailing" constant="18" id="Ste-A4-Phx"/>
+                            <constraint firstItem="NkG-rV-rtM" firstAttribute="bottom" secondItem="roS-bG-amX" secondAttribute="bottom" constant="50" id="VPw-JS-5Ov"/>
+                            <constraint firstItem="THR-8p-cLZ" firstAttribute="top" secondItem="NkG-rV-rtM" secondAttribute="top" constant="18" id="n2C-rm-aFl"/>
+                            <constraint firstItem="roS-bG-amX" firstAttribute="top" secondItem="THR-8p-cLZ" secondAttribute="bottom" constant="30" id="tty-ma-ONk"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="DRj-AB-Fwe">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="LgE-qx-17D">
+                            <connections>
+                                <action selector="editConsole:" destination="hus-oN-WCO" id="Lbg-Gg-L3N"/>
+                                <segue destination="G9e-Dc-8h4" kind="show" id="ZpS-cQ-gpV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="ivConsole" destination="roS-bG-amX" id="naW-fh-BFe"/>
+                        <outlet property="lbName" destination="THR-8p-cLZ" id="yVB-Nd-iUk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WlW-NP-c3Q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3969.5652173913045" y="1630.5803571428571"/>
         </scene>
         <!--Visualizar-->
         <scene sceneID="Lmx-lv-Xib">
@@ -458,7 +523,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="aRT-F4-bMQ"/>
+        <segue reference="ZpS-cQ-gpV"/>
+        <segue reference="5Co-Ng-6pL"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="console" width="23" height="23"/>
