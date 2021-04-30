@@ -2,14 +2,14 @@
 //  GameTableViewCell.swift
 //  MyGames
 //
-//  Created by Douglas Frari on 4/27/21.
+//  Created by Beatriz Castro on 27/04/21.
 //
 
 import UIKit
 
-// GAME no singular representa nossa CELULA
 class GameTableViewCell: UITableViewCell {
-
+    
+    
     @IBOutlet weak var ivCover: UIImageView!
     @IBOutlet weak var lbTitle: UILabel!
     @IBOutlet weak var lbConsole: UILabel!
