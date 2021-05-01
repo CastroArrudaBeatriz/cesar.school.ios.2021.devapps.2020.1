@@ -11,7 +11,7 @@ import Photos
 
 class AddEditConsoleViewController: UIViewController {
     
-    var console: Console!
+    var console: Console?
     
     @IBOutlet weak var tfName: UITextField!
     @IBOutlet weak var ivCover: UIImageView!
@@ -28,12 +28,12 @@ class AddEditConsoleViewController: UIViewController {
         if console != nil {
             title = "Editar console"
             btAddEdit.setTitle("ALTERAR", for: .normal)
-            tfName.text = console.name
+            tfName.text = console?.name
           
-            ivCover.image = console.cover as? UIImage
+            ivCover.image = console?.cover as? UIImage
         }
         
-        if console.cover != nil {
+        if console?.cover != nil {
             btAddImagem.setTitle(nil, for: .normal)
         }
     }
@@ -100,8 +100,8 @@ class AddEditConsoleViewController: UIViewController {
         if console == nil {
           console = Console(context: context)
         }
-        console.name = tfName.text
-        console.cover = ivCover.image
+        console?.name = tfName.text
+        console?.cover = ivCover.image
         
         do {
           try context.save()
