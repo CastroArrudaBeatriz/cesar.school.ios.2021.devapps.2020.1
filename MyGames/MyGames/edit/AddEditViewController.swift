@@ -39,6 +39,8 @@ class AddEditViewController: UIViewController {
         prepareDataLayout()
     }
     
+    ///
+    /// - returns irá setar os dados do game caso a tela seja aberta em modo de ediçao, e criar um ToolBar para escolher o console
     func prepareDataLayout() {
         if game != nil {
             title = "Editar jogo"
@@ -59,6 +61,14 @@ class AddEditViewController: UIViewController {
             }
         }
         
+        setPickerViewOnConsoleField()
+       
+    }
+    
+    
+    ///
+    /// - returns criar Toolbar com pickerView para escolher o console do game e setar ele no layout do campo de console
+    func setPickerViewOnConsoleField(){
         let toolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 44))
         toolbar.tintColor = UIColor(named: "main")
         let btCancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
@@ -71,39 +81,35 @@ class AddEditViewController: UIViewController {
         tfConsole.inputAccessoryView = toolbar
     }
     
+    
+    /// metodo de apoio que fecha todas as toolbars e elementos afins da viewController ao cancelar escolha do console
     @objc func cancel() {
         tfConsole.resignFirstResponder()
     }
     
+    /// metodo de apoio que seta o texto do console com a linha escolhida na pickeView
     @objc func done() {
         tfConsole.text = consolesManager.consoles[pickerView.selectedRow(inComponent: 0)].name
         cancel()
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    
+   
+    /// action para montar e apresentar alert com opcoes de escolha da imagem do game
     @IBAction func addEditCover(_ sender: Any) {
         
         let alert = UIAlertController(title: "Selecinar capa", message: "De onde você quer escolher a capa?", preferredStyle: .actionSheet)
+    
         
         let libraryAction = UIAlertAction(title: "Biblioteca de fotos", style: .default, handler: {(action: UIAlertAction) in
             self.selectPicture(sourceType: .photoLibrary)
         })
         alert.addAction(libraryAction)
         
+        
         let photosAction = UIAlertAction(title: "Album de fotos", style: .default, handler: {(action: UIAlertAction) in
             self.selectPicture(sourceType: .savedPhotosAlbum)
         })
         alert.addAction(photosAction)
+        
         
         let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
@@ -112,6 +118,8 @@ class AddEditViewController: UIViewController {
         
     }
     
+    /// Metodo para abrir as fotos e requerir autorizacao do usuario
+    /// - warning para este metodo funcionar é preciso setar as permissoes de 'Privacy - Media Library Usage Description' e 'Privacy - Photo Library Usage Description' no info.plist
     func selectPicture(sourceType: UIImagePickerController.SourceType) {
         
         //Photos
@@ -133,6 +141,7 @@ class AddEditViewController: UIViewController {
         }
     }
     
+    /// Metodo para apresentar galeria e captar a escolha da imagem
     func chooseImageFromLibrary(sourceType: UIImagePickerController.SourceType) {
         
         DispatchQueue.main.async {
@@ -147,7 +156,7 @@ class AddEditViewController: UIViewController {
         
     }
     
-    
+    /// Metodo para salvar o novo game ou edicoes de um já existente
     @IBAction func addEditGame(_ sender: Any) {
         
         if game == nil {
@@ -175,16 +184,18 @@ class AddEditViewController: UIViewController {
 
 
 extension AddEditViewController: UIPickerViewDelegate, UIPickerViewDataSource {
- 
+    
+    /// Metodo para setar o numero de informacoes que o pickerView vai ter, exemplo um pickerView com mês e ano teria dois componentes
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
  
- 
+    /// Metodo para setar o numero de elementos do pickerView de consoles
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return consolesManager.consoles.count
     }
- 
+    
+    /// Bind da lista de consoles em cada linha do PickerView
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         let console = consolesManager.consoles[row]
         return console.name

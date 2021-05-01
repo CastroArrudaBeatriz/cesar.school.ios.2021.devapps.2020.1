@@ -25,7 +25,12 @@ class GameTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    /// Metodo para fazer o bind de cada campo da celula com os dados do game
+    ///
+    /// - parameter game: dados do game que será rendenrizado na celula
+    /// - returns: fazer o bind de cada campo com os dados do game
     func prepare(with game: Game) {
+        
         lbTitle.text = game.title ?? ""
         lbConsole.text = game.console?.name ?? ""
         if let image = game.cover as? UIImage {
@@ -33,6 +38,7 @@ class GameTableViewCell: UITableViewCell {
         } else {
             ivCover.image = UIImage(named: "noCover")
         }
+        
     }
 
 }

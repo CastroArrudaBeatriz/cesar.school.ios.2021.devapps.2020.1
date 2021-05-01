@@ -24,6 +24,8 @@ class AddEditConsoleViewController: UIViewController {
         prepareDataLayout()
     }
     
+    ///
+    /// - returns irá setar os dados do console caso a tela seja aberta em modo de ediçao
     func prepareDataLayout() {
         if console != nil {
             title = "Editar console"
@@ -38,6 +40,8 @@ class AddEditConsoleViewController: UIViewController {
         }
     }
     
+    
+    /// action para montar e apresentar alert com opcoes de escolha da imagem do console
     @IBAction func addImageConsole(_ sender: Any) {
         let alert = UIAlertController(title: "Selecinar console", message: "De onde você quer escolher a capa?", preferredStyle: .actionSheet)
         
@@ -58,6 +62,9 @@ class AddEditConsoleViewController: UIViewController {
         
     }
     
+    
+    /// Metodo para abrir as fotos e requerir autorizacao do usuario
+    /// - warning para este metodo funcionar é preciso setar as permissoes de 'Privacy - Media Library Usage Description' e 'Privacy - Photo Library Usage Description' no info.plist
     func selectPicture(sourceType: UIImagePickerController.SourceType) {
         
         //Photos
@@ -79,6 +86,7 @@ class AddEditConsoleViewController: UIViewController {
         }
     }
     
+    /// Metodo para apresentar galeria e captar a escolha da imagem
     func chooseImageFromLibrary(sourceType: UIImagePickerController.SourceType) {
         
         DispatchQueue.main.async {
@@ -94,7 +102,7 @@ class AddEditConsoleViewController: UIViewController {
     }
     
     
-    
+    /// Metodo para salvar o novo console ou edicoes de um já existente
     @IBAction func saveConsole(_ sender: Any) {
         
         if console == nil {

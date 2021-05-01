@@ -19,6 +19,7 @@ class ConsoleViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    /// - returns irá setar os dados do console escolhido nos campos da tela de detalhes
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -32,6 +33,7 @@ class ConsoleViewController: UIViewController {
      
     }
     
+    /// - returns irá passar os dados do console para a tela de edição
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier! == "editConsoleSegue" {
             let vc = segue.destination as! AddEditConsoleViewController

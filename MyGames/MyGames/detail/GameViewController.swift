@@ -21,10 +21,10 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
     
+    
+    /// - returns irá setar os dados do game escolhido nos campos da tela de detalhes
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -51,6 +51,7 @@ class GameViewController: UIViewController {
         }
     }
     
+    /// - returns irá passar os dados do game para a tela de edição
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier! == "editGameSegue" {
             let vc = segue.destination as! AddEditViewController
