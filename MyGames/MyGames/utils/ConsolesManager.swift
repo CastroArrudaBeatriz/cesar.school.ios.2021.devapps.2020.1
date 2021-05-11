@@ -38,6 +38,7 @@ class ConsolesManager {
      
         do {
             try context.save()
+            // tirar da lista local de consoles para manter a estrutura dos dados atualizados
             consoles.remove(at: index)
         } catch  {
             print(error.localizedDescription)
