@@ -9,7 +9,10 @@
 import UIKit
 
 class AddEditViewController: UIViewController {
-
+    
+    var car: Car!
+    
+    
     // MARK: - IBOutlets
     @IBOutlet weak var tfBrand: UITextField!
     @IBOutlet weak var tfName: UITextField!
@@ -17,14 +20,64 @@ class AddEditViewController: UIViewController {
     @IBOutlet weak var scGasType: UISegmentedControl!
     @IBOutlet weak var btAddEdit: UIButton!
     @IBOutlet weak var loading: UIActivityIndicatorView!
-
+    
     // MARK: - Super Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if car != nil {
+            tfName?.text = car.name
+            tfBrand?.text = car.brand
+            tfPrice.text = "\(car.price)"
+            scGasType.selectedSegmentIndex = car.gasType
+            
+            btAddEdit.setTitle("Alterar carro", for: .normal)
+        }
     }
     
     // MARK: - IBActions
     @IBAction func addEdit(_ sender: UIButton) {
+        
+        if car == nil {
+            // adicionar carro novo
+            car = Car()
+        }
+        
+        car.name = (tfName?.text)!
+        car.brand = (tfBrand?.text)!
+        if tfPrice.text!.isEmpty {
+            tfPrice.text = "0"
+        }
+        car.price = Double(tfPrice.text!)!
+        car.gasType = scGasType.selectedSegmentIndex
+        
+        if car._id == nil {
+            // new car
+            REST.save(car: car) { (success) in
+                if(success){
+                    self.goBack()
+                }else {
+                    //TODO mostrar um erro generico
+                }
+            }
+        } else {
+            REST.update(car: car) { (success) in
+                if(success){
+                    self.goBack()
+                }else {
+                    //TODO mostrar um erro generico
+                }
+            }
+            
+        }
+        
     }
-
+    
+    func goBack() {
+        
+        DispatchQueue.main.async {
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+    }
 }
