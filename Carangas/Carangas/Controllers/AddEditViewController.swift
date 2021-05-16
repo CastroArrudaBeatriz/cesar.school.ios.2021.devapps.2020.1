@@ -104,19 +104,22 @@ class AddEditViewController: UIViewController {
         cancel()
     }
     
-    // MARK: - IBActions
+
     fileprivate func addCar() {
         
         startLoadingAnimation()
         
-        // new car
         REST.save(car: car) { (success) in
-            if success {
-                self.goBack()
-            } else {
-                // mostrar um erro generico
-                self.showAlert(withTitle: "Adicionar", withMessage: "Não foi possível adicionar o carro.", isTryAgain: true, operation: .add_car)
-            }
+            
+            self.goBack()
+            
+        } onError: { (error) in
+            
+            let response: String = self.findError(error: error)
+            print(response)
+            
+            self.showAlert(withTitle: "Adicionar", withMessage: "Não foi possível adicionar o carro.", isTryAgain: true, operation: .add_car)
+            
             
         }
     }
@@ -126,14 +129,17 @@ class AddEditViewController: UIViewController {
         
         startLoadingAnimation()
         
-        // 2 - edit current car
         REST.update(car: car) { (success) in
-            if success {
-                self.goBack()
-            } else {
-                self.showAlert(withTitle: "Editar", withMessage: "Não foi possível editar o carro.", isTryAgain: true, operation: .edit_car)
-            }
+            self.goBack()
+            
+        } onError: { (error) in
+            let response: String = self.findError(error: error)
+            print(response)
+            
+            self.showAlert(withTitle: "Editar", withMessage: "Não foi possível editar o carro.", isTryAgain: true, operation: .edit_car)
+            
         }
+
     }
     
     
@@ -209,6 +215,27 @@ class AddEditViewController: UIViewController {
         DispatchQueue.main.async {
             self.present(alert, animated: true, completion: nil)
         }
+    }
+    
+    func findError(error: CarError) -> String{
+        var response: String = ""
+        switch error {
+        case .invalidJSON:
+            response = "invalidJSON"
+        case .noData:
+            response = "noData"
+        case .noResponse:
+            response = "noResponse"
+        case .url:
+            response = "JSON inválido"
+        case .taskError(let error):
+            response = "\(error.localizedDescription)"
+        case .responseStatusCode(let code):
+            if code != 200 {
+                response = "Algum problema com o servidor. :( \nError:\(code)"
+            }
+        }
+        return response
     }
 
 } // fim da classe
