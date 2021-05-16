@@ -158,17 +158,18 @@ class CarsTableViewController: UITableViewController {
                     
                     DispatchQueue.main.async {
                         // Delete the row from the data source
-                        tableView.deleteRows(at: [indexPath], with: .fade)
-                    }                    
+                        self.tableView.deleteRows(at: [indexPath], with: .fade)
+                    }
                     
                 } else {
-                    // TODO mostrar algo para o usuario
+                    self.showAlert(withTitle: "Remover", withMessage: "Não foi possível remover o carro.", isTryAgain: true)
                 }
             }
+            
         }
     }
     
-
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -200,5 +201,27 @@ class CarsTableViewController: UITableViewController {
         }
     }
     
+    func showAlert(withTitle titleMessage: String, withMessage message: String, isTryAgain hasRetry: Bool) {
+        
+        let alert = UIAlertController(title: titleMessage, message: message, preferredStyle: .actionSheet)
+        
+        if hasRetry {
+            let tryAgainAction = UIAlertAction(title: "Tentar novamente", style: .default, handler: {(action: UIAlertAction) in
+                
+                self.tableView.resignFirstResponder()
+                
+            })
+            alert.addAction(tryAgainAction)
+            
+            let cancelAction = UIAlertAction(title: "Cancelar", style: .cancel, handler: {(action: UIAlertAction) in
+                self.tableView.resignFirstResponder()
+            })
+            alert.addAction(cancelAction)
+        }
+        
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
 
 }
