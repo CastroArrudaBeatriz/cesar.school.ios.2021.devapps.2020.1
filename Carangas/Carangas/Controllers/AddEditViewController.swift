@@ -65,6 +65,7 @@ class AddEditViewController: UIViewController {
         loadBrands()
     }
     
+    ///metodo para iniciar animacao de load ao pesquisar a marca
     func startLoadingAnimation() {
         self.btAddEdit.isEnabled = false
         self.btAddEdit.backgroundColor = .gray
@@ -72,6 +73,7 @@ class AddEditViewController: UIViewController {
         self.loading.startAnimating()
     }
     
+    ///metodo para parar  animacao de load ao pesquisar a marca
     func stopLoadingAnimation() {
         self.btAddEdit.isEnabled = true
         self.btAddEdit.backgroundColor = UIColor(named: "main")
@@ -79,6 +81,7 @@ class AddEditViewController: UIViewController {
         self.loading.stopAnimating()
     }
     
+    ///metodo para carregar as marcas e setar no pickerview do campo de marca
     func loadBrands() {
         
         REST.loadBrands { (brands) in
@@ -99,6 +102,7 @@ class AddEditViewController: UIViewController {
         tfBrand.resignFirstResponder()
     }
     
+    ///setar o elemento selecionado da pickerview no campo de marca
     @objc func done() {
         tfBrand.text = brands[pickerView.selectedRow(inComponent: 0)].fipe_name
         cancel()
@@ -144,7 +148,7 @@ class AddEditViewController: UIViewController {
     
     
     
-    
+    /// action do botao de salvar que pode tanto adicionar um novo carro ou editar um existente
     @IBAction func addEdit(_ sender: UIButton) {
         
         if car == nil {
@@ -179,7 +183,7 @@ class AddEditViewController: UIViewController {
         
     }
     
-    
+    /// metodo para monter alerta de retentativa e exibir
     func showAlert(withTitle titleMessage: String, withMessage message: String, isTryAgain hasRetry: Bool, operation oper: CarOperationAction) {
         
         if oper != .get_brands {
@@ -217,6 +221,7 @@ class AddEditViewController: UIViewController {
         }
     }
     
+    /// metodo para distinguir o erro e setar uma mensagem adequada
     func findError(error: CarError) -> String{
         var response: String = ""
         switch error {

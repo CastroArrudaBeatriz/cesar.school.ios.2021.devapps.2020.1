@@ -12,7 +12,7 @@ class CarsTableViewController: UITableViewController {
 
     var cars: [Car] = []
     
-    
+    /// label para quando não houver dados
     var label: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -30,6 +30,7 @@ class CarsTableViewController: UITableViewController {
         tableView.refreshControl = refreshControl
     }
     
+    /// metodo para caregar os carros ao carregar a tableview
     @objc func loadData() {
         
         REST.loadCars(onComplete: { (cars) in
@@ -73,7 +74,7 @@ class CarsTableViewController: UITableViewController {
         }
     }
     
-    
+    /// metodo para distinguir o erro e setar uma mensagem adequada
     func findError(error: CarError) -> String{
         var response: String = ""
         switch error {
@@ -120,7 +121,6 @@ class CarsTableViewController: UITableViewController {
         if cars.count == 0 {
             
             // mostrar mensagem padrao
-//            self.label.text = "Sem dados"
             self.tableView.backgroundView = self.label
         } else {
             self.label.text = ""
@@ -146,33 +146,30 @@ class CarsTableViewController: UITableViewController {
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-                
+        
         if editingStyle == .delete {
             
             let car = cars[indexPath.row]
             
             REST.delete(car: car) { (success) in
                 
-                if success {
-                    // remover da estrutura local antes de atualizar
-                    self.cars.remove(at: indexPath.row)
-                    
-                    DispatchQueue.main.async {
-                        // Delete the row from the data source
-                        self.tableView.deleteRows(at: [indexPath], with: .fade)
-                    }
-                    
-                } else {
-                    self.showAlert(withTitle: "Remover", withMessage: "Não foi possível remover o carro.", isTryAgain: true)
+                // remover da estrutura local antes de atualizar
+                self.cars.remove(at: indexPath.row)
+                
+                DispatchQueue.main.async {
+                    // Delete the row from the data source
+                    self.tableView.deleteRows(at: [indexPath], with: .fade)
                 }
+                
                 
             } onError: { (error) in
                 
                 let response: String = self.findError(error: error)
-                
                 print(response)
+                
+                self.showAlert(withTitle: "Remover", withMessage: "Não foi possível remover o carro.", isTryAgain: true)
             }
-
+            
             
             
         }
@@ -192,6 +189,7 @@ class CarsTableViewController: UITableViewController {
         }
     }
     
+    /// metodo para monter alerta de retentativa e exibir
     func showAlert(withTitle titleMessage: String, withMessage message: String, isTryAgain hasRetry: Bool) {
         
         let alert = UIAlertController(title: titleMessage, message: message, preferredStyle: .actionSheet)

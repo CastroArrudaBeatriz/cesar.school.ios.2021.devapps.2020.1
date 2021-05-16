@@ -73,6 +73,7 @@ class REST {
     
     
     // o metodo pode retornar um array de nil se tiver algum erro
+    /// exemplo de como fazer request sem utilizar Alamofire
     class func loadBrands(onComplete: @escaping ([Brand]?) -> Void) {
         
         guard let url = URL(string: urlFipe) else {
@@ -158,7 +159,7 @@ class REST {
         
         // o endpoint do servidor para update é: URL/id
         let urlString = basePath + "/" + (car._id ?? "")
-        guard let url = URL(string: urlString) else {
+        guard URL(string: urlString) != nil else {
             onError(.url)
             return
         }
