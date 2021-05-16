@@ -2,7 +2,7 @@
 //  REST.swift
 //  Carangas
 //
-//  Created by Beatriz Castro on 5/10/21.
+//  Created by Douglas Frari on 5/10/21.
 //  Copyright © 2021 Eric Brito. All rights reserved.
 //
 
@@ -24,10 +24,14 @@ enum RESTOperation {
     case delete
 }
 
+
 class REST {
     
     // URL + endpoint
     private static let basePath = "https://carangas.herokuapp.com/cars"
+    
+    // URL TABELA FIPE
+    private static let urlFipe = "https://fipeapi.appspot.com/api/1/carros/marcas.json"
     
     // session criada automaticamente e disponivel para reusar
     private static let session = URLSession(configuration: configuration)
@@ -41,6 +45,8 @@ class REST {
         return config
     }()
     
+    
+    
     class func delete(car: Car, onComplete: @escaping (Bool) -> Void ) {
         applyOperation(car: car, operation: .delete, onComplete: onComplete)
     }
@@ -53,19 +59,15 @@ class REST {
         applyOperation(car: car, operation: .save, onComplete: onComplete)
     }
     
-    
     // o metodo pode retornar um array de nil se tiver algum erro
     class func loadBrands(onComplete: @escaping ([Brand]?) -> Void) {
         
-        // URL TABELA FIPE
-        
-        let urlFipe = "https://fipeapi.appspot.com/api/1/carros/marcas.json"
         guard let url = URL(string: urlFipe) else {
             onComplete(nil)
             return
         }
         // tarefa criada, mas nao processada
-        let dataTask = session.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
+        session.dataTask(with: url) { (data: Data?, response: URLResponse?, error: Error?) in
             if error == nil {
                 guard let response = response as? HTTPURLResponse else {
                     onComplete(nil)
@@ -90,10 +92,9 @@ class REST {
             } else {
                 onComplete(nil)
             }
-        }
-        // start request
-        dataTask.resume()
-    }
+        }.resume()
+        
+    } // fim do loadBrands
     
     
     class func loadCars(onComplete: @escaping ([Car]) -> Void, onError: @escaping (CarError) -> Void) {
@@ -154,12 +155,18 @@ class REST {
         
     }
     
+    
+    
     private class func applyOperation(car: Car, operation: RESTOperation , onComplete: @escaping (Bool) -> Void ) {
         
         // o endpoint do servidor para update é: URL/id
         let urlString = basePath + "/" + (car._id ?? "")
         
-        var request = URLRequest(url: URL(string: urlString)!)
+        guard let url = URL(string: urlString) else {
+            onComplete(false)
+            return
+        }
+        var request = URLRequest(url: url)
         var httpMethod: String = ""
         
         switch operation {
@@ -179,7 +186,7 @@ class REST {
         }
         request.httpBody = json
         
-        let dataTask = session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
+        session.dataTask(with: request) { (data: Data?, response: URLResponse?, error: Error?) in
             if error == nil {
                 // verificar e desembrulhar em uma unica vez
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200, let _ = data else {
@@ -193,9 +200,9 @@ class REST {
             } else {
                 onComplete(false)
             }
-        }
+            
+        }.resume()
         
-        dataTask.resume()
     }
     
 }
